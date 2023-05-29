@@ -736,13 +736,7 @@ def xyz2mol(atoms, coordinates, charge=0, allow_charged_fragments=True,
 
 
 def main():
-
-
-    return
-
-
-if __name__ == "__main__":
-
+    
     import argparse
 
     parser = argparse.ArgumentParser(usage='%(prog)s [options] molecule.xyz')
@@ -810,6 +804,9 @@ if __name__ == "__main__":
         embed_chiral=embed_chiral,
         use_huckel=use_huckel)
 
+    if not mols:
+        raise RuntimeError("Could not create molecules")
+        
     # Print output
     for mol in mols:
         if args.output_format == "sdf":
@@ -822,4 +819,9 @@ if __name__ == "__main__":
             smiles = Chem.MolToSmiles(mol, isomericSmiles=isomeric_smiles)
             m = Chem.MolFromSmiles(smiles)
             smiles = Chem.MolToSmiles(m, isomericSmiles=isomeric_smiles)
-            print(smiles)
+            print(smiles)            
+    return 0
+
+
+if __name__ == "__main__":
+    main()
